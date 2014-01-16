@@ -1,3 +1,6 @@
+/* CPU Emulation of a Ricoh 2A02 (NTSC) based on a MOS 6502 CPU
+ * Operates at 1.79Mhz
+ */
 #include <signal.h>
 #include <stdarg.h>
 #include <stdlib.h>
@@ -221,6 +224,9 @@ cpu_cycle(cpu_t *cpu)
       cpu->p.n = (cpu->a >> 7) & 1;
       cpu->p.z = (t == 0) ? 1 : 0;
       if (cpu->p.d) {
+	/* Normally A and M should be BCD() in a 6502, but
+	 * Ricoh 2A03 used in a NES has decimal mode disabled
+	 */
 	t = cpu->a + m + cpu->p.c;
 	cpu->p.c = (t > 99) ? 1:0;
       } else

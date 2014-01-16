@@ -1,3 +1,6 @@
+/* Simple iNes v1.0 format parser (.nes)
+ */
+
 #include <assert.h>
 #include <fcntl.h>
 #include <stdio.h>

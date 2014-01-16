@@ -1,3 +1,6 @@
+/* PPU Emulation of a Ricoh RP2C02 (NTSC)
+ * Operates at 5.37Mhz
+ */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

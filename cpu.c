@@ -8,17 +8,18 @@
 #include <stdio.h>
 
 #include "cpu.h"
+#include "ppu.h"
 
 #define NMI_ADDRESS 0xFFFA
 #define DEBUG_ASM 0
 
 cpu_t*
-cpu_create(void)
+cpu_create(emu_t *emu)
 {
     cpu_t *cpu;
     cpu = calloc(sizeof(cpu_t), 1);
     cpu->mem = calloc(sizeof(uint8_t), 65536);
-    cpu->ppu = ppu_create();
+    cpu->emu = emu;
     return cpu;
 }
 
@@ -37,7 +38,7 @@ cpu_read_byte(cpu_t *cpu,
 {
   /* 0x2000..0x3fff is PPU and mirrors */
   if (addr >= 0x2000 && addr <= 0x3fff) {
-    return ppu_read(cpu->ppu, addr);
+    return ppu_read(cpu->emu->ppu, addr);
   } else if (addr >= 0x4000 && addr <= 0x401f) {
     //printf("FIXME: apu_read(%04X)\n", addr);
     return 0;
@@ -64,7 +65,7 @@ cpu_write_byte(cpu_t    *cpu,
 {
   /* 0x2000..0x3fff is PPU and mirrors */
   if (addr >= 0x2000 && addr <= 0x3fff) {
-    ppu_write(cpu->ppu, addr, value);
+    ppu_write(cpu->emu->ppu, addr, value);
   } else if (addr >= 0x4000 && addr <= 0x401f) {
     printf("FIXME: apu_write(%04X) = %02X\n", addr, value);
   } else if (addr >= 0xfffa) {
@@ -468,7 +469,7 @@ cpu_nmi_handler(cpu_t *cpu)
   if (addr) {
     cpu->pc = addr;
   }
-  ppu_nmi_disable(cpu->ppu);
+  ppu_nmi_disable(cpu->emu->ppu);
 }
 
 void
@@ -477,11 +478,11 @@ cpu_run(cpu_t *cpu,
 {
     cpu->pc = address;
     while (1) {
-      bool nmi = ppu_nmi_is_enabled(cpu->ppu);
+      bool nmi = ppu_nmi_is_enabled(cpu->emu->ppu);
       cpu_cycle(cpu);
       if (nmi) {
 	cpu_nmi_handler(cpu);
       }
-      ppu_run(cpu->ppu, 4);
+      ppu_run(cpu->emu->ppu, 4);
     }
 }

@@ -475,6 +475,27 @@ cpu_nmi_handler(cpu_t *cpu)
 }
 
 void
+cpu_dump(cpu_t *cpu)
+{
+  printf("\n===[ CPU DUMP START ]===\n");
+  printf("PC: %04X, SP: %02X\n", cpu->pc, cpu->sp);
+  printf("Registers:\n");
+  printf("  A: %02X\n", cpu->a);
+  printf("  X: %02X\n", cpu->x);
+  printf("  Y: %02X\n", cpu->y);
+  printf("Flags: [%c%c%c%c%c%c%c%c]\n",
+         cpu->p.n ? 'N' : ' ',
+         cpu->p.v ? 'V' : ' ',
+         cpu->p.u ? 'U' : ' ',
+         cpu->p.b ? 'B' : ' ',
+         cpu->p.d ? 'D' : ' ',
+         cpu->p.i ? 'I' : ' ',
+         cpu->p.z ? 'Z' : ' ',
+         cpu->p.c ? 'C' : ' ');
+  printf("===[ CPU DUMP STOP ]===\n\n");
+}
+
+void
 cpu_run(cpu_t *cpu,
 	uint16_t address)
 {

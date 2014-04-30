@@ -12,5 +12,6 @@ void cpu_map(cpu_t   *cpu,
 	     uint16_t  size);
 void cpu_run(cpu_t *cpu,
 	     uint16_t address);
+void cpu_dump(cpu_t *cpu);
 
 #endif /* __CPU_H__ */

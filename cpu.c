@@ -47,7 +47,7 @@ cpu_read_byte(cpu_t *cpu,
   }
 }
 
-static inline uint16_t 
+static inline uint16_t
 cpu_read16(cpu_t *cpu,
 	   uint16_t addr)
 {
@@ -113,8 +113,8 @@ cpu_printf(cpu_t *cpu, int n, const char *str, ...)
 }
 #else
 static void
-cpu_printf(cpu_t *cpu __attribute__((unused)), 
-	   int n __attribute__((unused)), 
+cpu_printf(cpu_t *cpu __attribute__((unused)),
+	   int n __attribute__((unused)),
 	   const char *str __attribute__((unused)), ...)
 {
 }
@@ -231,7 +231,7 @@ cpu_cycle(cpu_t *cpu)
 	cpu->p.c = (t > 99) ? 1:0;
       } else
 	cpu->p.c = (t > 255) ? 1:0;
-      cpu->a = t & 0xFF;                
+      cpu->a = t & 0xFF;
       cpu_printf(cpu, 2, "ADC $%04X = #$%02X\n", m, cpu->a);
       break;
     }
@@ -286,7 +286,7 @@ cpu_cycle(cpu_t *cpu)
     }
     case 0x91: { // STA, indirect, Y
       uint16_t m = cpu_next8(cpu);
-      cpu_printf(cpu, 2, "STA ($%02X),Y @ $%04X = #&%02X\n", 
+      cpu_printf(cpu, 2, "STA ($%02X),Y @ $%04X = #&%02X\n",
 		 m, cpu->y, cpu->a);
       cpu_write_byte(cpu, m, cpu->y);
       break;

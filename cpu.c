@@ -100,7 +100,7 @@ cpu_printf(cpu_t *cpu, int n, const char *str, ...)
   char tmp[5];
 
   va_start(args, str);
-  snprintf(format, 8, "$%X: ", cpu->pc - n);
+  snprintf(format, 20, "[%08d] $%X: ", cpu->instructions, cpu->pc - n);
   for (int i = n; i > 0; i--) {
     snprintf(tmp, 4, "%02X ", cpu->mem[cpu->pc - i]);
     strncat(format, tmp, 4);
@@ -457,6 +457,8 @@ cpu_cycle(cpu_t *cpu)
       exit(-1);
       break;
   }
+
+  cpu->instructions++;
 }
 
 void

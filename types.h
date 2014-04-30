@@ -43,6 +43,9 @@ struct cpu_t {
     uint8_t n : 1; // Negative flag
   } p;
 
+  /* Instruction counter */
+  uint32_t instructions;
+
   emu_t *emu;
 
 };

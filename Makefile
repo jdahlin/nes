@@ -4,6 +4,7 @@ FLAGS        = -std=gnu99
 CFLAGS       = -Wall -Wextra
 DEBUGFLAGS   = -O0 -g
 RELEASEFLAGS = -O2 -combine
+LINKFLAGS    =
 
 TARGET  = nes
 SOURCES = $(shell echo *.c)
@@ -14,10 +15,14 @@ OBJECTS = $(SOURCES:.c=.o)
 PREFIX = $(DESTDIR)/usr/local
 BINDIR = $(PREFIX)/bin
 
+# SDL2
+CFLAGS += $(shell sdl2-config --cflags)
+LINKFLAGS += $(shell sdl2-config --static-libs)
+
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(COMMON)
-	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS)
+	$(CC) $(DEBUGFLAGS) -o $(TARGET) $(OBJECTS) $(LINKFLAGS)
 
 release: $(SOURCES) $(HEADERS) $(COMMON)
 	$(CC) $(FLAGS) $(CFLAGS) $(RELEASEFLAGS) -o $(TARGET) $(SOURCES)

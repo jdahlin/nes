@@ -1,4 +1,4 @@
-CC = gcc
+CC = clang
 
 FLAGS        = -std=gnu99
 CFLAGS       = -Wall -Wextra

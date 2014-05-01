@@ -1,16 +1,16 @@
 CC = clang
 
-FLAGS        = -std=gnu99
+FLAGS        =
 CFLAGS       = -Wall -Wextra
 DEBUGFLAGS   = -O0 -g
 RELEASEFLAGS = -O2 -combine
 LINKFLAGS    =
 
 TARGET  = nes
-SOURCES = $(shell echo *.c)
+SOURCES = $(shell echo *.cpp)
 COMMON  =
 HEADERS = $(shell echo *.h)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.cpp=.o)
 
 PREFIX = $(DESTDIR)/usr/local
 BINDIR = $(PREFIX)/bin
@@ -48,8 +48,8 @@ distclean: clean
 
 .SECONDEXPANSION:
 
-$(foreach OBJ,$(OBJECTS),$(eval $(OBJ)_DEPS = $(shell gcc -MM $(OBJ:.o=.c) | sed s/.*://)))
-%.o: %.c $$($$@_DEPS)
+$(foreach OBJ,$(OBJECTS),$(eval $(OBJ)_DEPS = $(shell gcc -MM $(OBJ:.o=.cpp) | sed s/.*://)))
+%.o: %.cpp $$($$@_DEPS)
 	$(CC) $(FLAGS) $(CFLAGS) $(DEBUGFLAGS) -c -o $@ $<
 
 

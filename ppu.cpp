@@ -42,8 +42,8 @@ ppu_t*
 ppu_create(emu_t *emu)
 {
     ppu_t *ppu;
-    ppu = calloc(sizeof(ppu_t), 1);
-    ppu->mem = calloc(sizeof(uint8_t), 0x4000);
+    ppu = (ppu_t*)calloc(sizeof(ppu_t), 1);
+    ppu->mem = (uint8_t*)calloc(sizeof(uint8_t), 0x4000);
     ppu->emu = emu;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {

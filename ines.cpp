@@ -18,7 +18,7 @@ ines_load(const char *filename)
 {
     ines_t *ines;
 
-    ines = malloc(sizeof(ines_t));
+    ines = (ines_t*)malloc(sizeof(ines_t));
     ines->filename = filename;
     ines->fd = open(filename, O_RDONLY);
     if (ines->fd == -1) {
@@ -39,7 +39,7 @@ ines_load(const char *filename)
         return NULL;
     }
 
-    ines->prg = ines->map + sizeof(header_t);
+    ines->prg = (uint8_t*)ines->map + sizeof(header_t);
     ines->chr = ines->prg + HEADER(ines).prg_size;
 
     ines_dump(ines);

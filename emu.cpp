@@ -12,7 +12,7 @@ emu_create(void)
 {
   emu_t * emu;
 
-  emu = calloc(sizeof(emu_t), 1);
+  emu = (emu_t*)calloc(sizeof(emu_t), 1);
   emu->cpu = cpu_create(emu);
   emu->ppu = ppu_create(emu);
 

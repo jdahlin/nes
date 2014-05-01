@@ -17,8 +17,8 @@ cpu_t*
 cpu_create(emu_t *emu)
 {
     cpu_t *cpu;
-    cpu = calloc(sizeof(cpu_t), 1);
-    cpu->mem = calloc(sizeof(uint8_t), 65536);
+    cpu = (cpu_t*)calloc(sizeof(cpu_t), 1);
+    cpu->mem = (uint8_t*)calloc(sizeof(uint8_t), 65536);
     cpu->emu = emu;
     return cpu;
 }

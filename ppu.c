@@ -95,7 +95,9 @@ static inline void
 ppu_write_data(ppu_t *ppu,
                uint8_t value)
 {
-  printf("ppudata[%04X] = $%02X\n", ppu->pc & 0x3fff, value);
+  //printf("ppudata[%04X] = $%02X\n", ppu->pc & 0x3fff, value);
+
+  /* Valid addresses are $0000-$3FFF; higher addresses will be mirrored down. */
   ppu->mem[ppu->pc & 0x3fff] = value;
 
   if (ppu->regs[0] >> 2 & 1)
@@ -181,6 +183,7 @@ ppu_write(ppu_t   *ppu,
   }
 }
 
+/* Read CPU $2000-$2007 memory registers and copies */
 uint8_t
 ppu_read(ppu_t   *ppu,
 	 uint16_t addr)
